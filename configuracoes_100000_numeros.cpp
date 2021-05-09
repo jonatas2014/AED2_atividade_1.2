@@ -1,5 +1,7 @@
 #include <iostream>
 #include <iomanip> //setprecision
+#include <algorithm> //swap
+
 
 using namespace std;
 
@@ -50,39 +52,62 @@ void random_v(int vetor[], int quant_numeros, int max_number)
 
 }
 
-/* Gera próximo gap */
+/* Calcula próximo gap */
 int next_gap(int gap){
+
+    /* Gap não pode ser menor do que 1 */
+    if (gap <= 1)
+        return 1;
+
     return gap/1.3;
 }
 
-/* comb_sort_crescente */
+/* Comb_sort crescente */
 void comb_sort_cres(int *v, int size){
 
+    /* tamanho inicial do gap (tamnho  do vetor) */
     int gap = size;
 
-    while(gap > 1){
+    int swapped = 1;
+
+    /* Ordena até gap == 1 e na última passagem não ter tido troca*/
+    while(gap != 1 || swapped == 1){
         gap = next_gap(gap);
 
+        swapped = 0;
+        
+        /* Loop de iteração sob o vetor considerando o gap */
         for (int i = 0; i < size - gap; i++){
-
-            if (v[i] > v[i + gap])
+            if (v[i] > v[i + gap]){
                 swap(v[i], v[i + gap]);
+                swapped = 1;
+            }
+                
         }
     }
 }
 
-/* comb sort decrescente */
-void comb_sort_desc(int *v, int size){
+/* Comb_sort decrescente */
+void comb_sort_decres(int *v, int size){
 
+    /* tamanho inicial do gap (tamnho  do vetor) */
     int gap = size;
 
-    while(gap > 1){
+    int swapped = 1;
+
+    /* Ordena até gap == 1 e na última passagem não ter tido troca*/
+    while(gap != 1 || swapped == 1){
         gap = next_gap(gap);
 
-        for (int i = 0; i < size - gap; i++){
+        swapped = 0;
 
-            if (v[i] < v[i + gap])
+        /* Loop de iteração sob o vetor considerando o gap */
+        for (int i = 0; i < size - gap; i++){
+            if (v[i] < v[i + gap]){
                 swap(v[i], v[i + gap]);
+                swapped = 1;
+            }
+                
         }
     }
 }
@@ -110,7 +135,7 @@ void gen_config_2(int *v){
 /* gera elementos ordenado descrescentemente */
 void gen_config_3(int *v){
 
-    comb_sort_desc(v, N);
+    comb_sort_decres(v, N);
 
     cout << "Vetor ordenado decrescentemente\n";
     imprime_vetor(v, N);
@@ -131,7 +156,7 @@ void gen_config_4(int *v){
     /* Gerando a metade descrecente */
     int sort_desc[N];
     random_v(sort_desc, N, MAX_NUMBER);
-    comb_sort_desc(sort_desc, N);
+    comb_sort_decres(sort_desc, N);
     for (int i = 0; i < N/2; i++){
         v[i + N/2] = sort_desc[i];
     }
@@ -147,7 +172,7 @@ void gen_config_5(int *v){
     /* Gerando a metade descrecente */
     int sort_desc[N];
     random_v(sort_desc, N, MAX_NUMBER);
-    comb_sort_desc(sort_desc, N);
+    comb_sort_decres(sort_desc, N);
     for (int i = 0; i < N/2; i++){
         v[i] = sort_desc[i];
     }
