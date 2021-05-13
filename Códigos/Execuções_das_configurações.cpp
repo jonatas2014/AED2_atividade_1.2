@@ -1,3 +1,9 @@
+/* 
+   Este código foi escrito para executar as configurações
+   solicitadas no trabalho e verificar seus tempos de execuções
+   para que os resultados obtidos sirvam de base análise no relatório
+*/ 
+
 #include <iostream>
 #include <iomanip> //setprecision
 #include <algorithm> //swap
